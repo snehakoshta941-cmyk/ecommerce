@@ -690,7 +690,7 @@ app.get('/api/products/high-quality-beauty', async (req, res) => {
   }
 });
 
-// Get Trending Collection (Bangles)
+// Get Trending Collection (Bangles Only)
 app.get('/api/products/trending-collection', async (req, res) => {
   try {
     if (mongoose.connection.readyState !== 1) {
@@ -699,9 +699,9 @@ app.get('/api/products/trending-collection', async (req, res) => {
 
     const products = await Product.find({
       $or: [
-        { isTrending: true },
         { subcategory: 'Bangles' },
-        { subCategory: 'Bangles' }
+        { subCategory: 'Bangles' },
+        { name: { $regex: 'bangle', $options: 'i' } }
       ]
     })
     .select('name price originalPrice discount image images category subcategory rating reviews description inStock brand stock sold tags colors isTrending')
@@ -710,7 +710,7 @@ app.get('/api/products/trending-collection', async (req, res) => {
     .lean()
     .exec();
 
-    console.log(`🔥 Trending Collection: ${products.length} products`);
+    console.log(`🔥 Trending Collection (Bangles Only): ${products.length} products`);
     res.json(products);
   } catch (error) {
     console.error('Trending Collection API error:', error);
@@ -718,21 +718,27 @@ app.get('/api/products/trending-collection', async (req, res) => {
   }
 });
 
-// Get Most Popular Products
+// Get Most Popular Products (Sarees Only)
 app.get('/api/products/most-popular', async (req, res) => {
   try {
     if (mongoose.connection.readyState !== 1) {
       return res.json([]);
     }
 
-    const products = await Product.find({ isPopular: true })
+    const products = await Product.find({
+      $or: [
+        { subcategory: 'Sarees' },
+        { subCategory: 'Sarees' },
+        { name: { $regex: 'saree', $options: 'i' } }
+      ]
+    })
     .select('name price originalPrice discount image images category subcategory rating reviews description inStock brand stock sold tags colors isPopular')
     .limit(10)
     .sort({ sold: -1, rating: -1 })
     .lean()
     .exec();
 
-    console.log(`⭐ Most Popular: ${products.length} products`);
+    console.log(`⭐ Most Popular (Sarees Only): ${products.length} products`);
     res.json(products);
   } catch (error) {
     console.error('Most Popular API error:', error);
@@ -2660,20 +2666,6 @@ app.post('/api/returns', authMiddleware, async (req, res) => {
   }
 });
 
-// Get User's Returns (alias for /api/returns/my-returns)
-app.get('/api/returns', authMiddleware, async (req, res) => {
-  try {
-    const returns = await Return.find({ userId: req.user.userId })
-      .populate('orderId')
-      .sort({ createdAt: -1 });
-    
-    res.json({ returns });
-  } catch (error) {
-    console.error('Error fetching returns:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-});
-
 // Get User's Returns
 app.get('/api/returns/my-returns', authMiddleware, async (req, res) => {
   try {
@@ -2903,6 +2895,22 @@ app.put('/api/admin/returns/:id/status', authMiddleware, async (req, res) => {
   }
 });
 
+// ============ MISSING APIs - ADDED ============
+
+// Get User's Returns (alias for /api/returns/my-returns)
+app.get('/api/returns', authMiddleware, async (req, res) => {
+  try {
+    const returns = await Return.find({ userId: req.user.userId })
+      .populate('orderId')
+      .sort({ createdAt: -1 });
+    
+    res.json({ returns });
+  } catch (error) {
+    console.error('Error fetching returns:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 // ============ CATEGORY APIs ============
 
 // Get All Categories
@@ -2942,7 +2950,7 @@ app.get('/api/categories/:id', async (req, res) => {
 // Get User Profile
 app.get('/api/users/profile', authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select('-password');
+    const user = await User.findById(req.user.userId).select('-password');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -2957,7 +2965,7 @@ app.put('/api/users/profile', authMiddleware, async (req, res) => {
   try {
     const { name, phone, email } = req.body;
     
-    const user = await User.findById(req.userId);
+    const user = await User.findById(req.user.userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -2967,19 +2975,14 @@ app.put('/api/users/profile', authMiddleware, async (req, res) => {
     if (email && email !== user.email) {
       // Check if email already exists
       const existingUser = await User.findOne({ email: email.toLowerCase() });
-      if (existingUser && existingUser._id.toString() !== req.userId) {
+      if (existingUser && existingUser._id.toString() !== req.user.userId) {
         return res.status(400).json({ message: 'Email already in use' });
       }
       user.email = email.toLowerCase();
     }
 
     await user.save();
-    
-    // Return user without password
-    const userResponse = user.toObject();
-    delete userResponse.password;
-    
-    res.json({ message: 'Profile updated successfully', user: userResponse });
+    res.json({ message: 'Profile updated successfully', user: { ...user.toObject(), password: undefined } });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -2992,3 +2995,18 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`🌐 Network access: http://192.168.1.3:${PORT}/api`);
   console.log(`🔐 JWT Secret configured: ${process.env.JWT_SECRET ? 'Yes' : 'No'}`);
 });
+// Get User's Returns (alias for /api/returns/my-returns)
+app.get('/api/returns', authMiddleware, async (req, res) => {
+  try {
+    const returns = await Return.find({ userId: req.user.userId })
+      .populate('orderId')
+      .sort({ createdAt: -1 });
+
+    res.json({ returns });
+  } catch (error) {
+    console.error('Error fetching returns:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+
