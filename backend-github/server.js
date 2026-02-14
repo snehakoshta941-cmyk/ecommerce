@@ -235,497 +235,48 @@ const initializeProducts = async () => {
     const count = await Product.countDocuments();
     if (count === 0) {
       await Product.insertMany([
-        // 8 Unique Party Wear Sarees (Most Popular)
         {
-          name: 'Beige Sequins Embroidered Party Wear Saree',
-          description: 'Elegant beige organza saree with beautiful sequins embroidery work, perfect for party occasions',
-          price: 2499,
-          originalPrice: 3499,
-          discount: 29,
-          image: 'http://gunjfashion.com/cdn/shop/files/beige-sequins-embroidered-party-wear-saree-in-organza_2.jpg?v=1709022790',
-          images: ['http://gunjfashion.com/cdn/shop/files/beige-sequins-embroidered-party-wear-saree-in-organza_2.jpg?v=1709022790'],
-          category: 'Clothes',
-          subcategory: 'Sarees',
-          brand: 'Gunj Fashion',
-          rating: 4.6,
-          reviews: 89,
-          stock: 25,
-          sold: 145,
-          inStock: true,
-          isPopular: true,
-          isTrending: false,
-          isHighQuality: false,
-          tags: ['party wear', 'saree', 'ethnic'],
-          colors: ['Beige'],
-        },
-        {
-          name: 'Neon Pink Embroidered Party Wear Saree',
-          description: 'Stunning neon pink saree with intricate embroidery, ideal for festive celebrations and parties',
-          price: 2799,
-          originalPrice: 3999,
-          discount: 30,
-          image: 'http://mysilklove.com/cdn/shop/files/22_d17eddab-0571-4be6-8606-16c641e5f081.jpg?v=1734517018&width=2048',
-          images: ['http://mysilklove.com/cdn/shop/files/22_d17eddab-0571-4be6-8606-16c641e5f081.jpg?v=1734517018&width=2048'],
-          category: 'Clothes',
-          subcategory: 'Sarees',
-          brand: 'My Silk Love',
-          rating: 4.7,
+          name: 'Nike Air Max 1',
+          price: 8999,
+          image: 'https://via.placeholder.com/150',
+          category: 'Shoes',
+          rating: 4.5,
           reviews: 102,
-          stock: 20,
-          sold: 178,
+          description: 'Premium quality Nike Air Max shoes with excellent comfort.',
           inStock: true,
-          isPopular: true,
-          isTrending: false,
-          isHighQuality: false,
-          tags: ['party wear', 'saree', 'festive'],
-          colors: ['Pink'],
         },
         {
-          name: 'Charming Orange Soft Jimmy Choo Party Wear Saree',
-          description: 'Beautiful orange soft silk saree with elegant draping, perfect for special occasions',
-          price: 2299,
-          originalPrice: 3199,
-          discount: 28,
-          image: 'https://www.fabfunda.com/product-img/women-charming-party-wear-oran-1721123762.jpeg',
-          images: ['https://www.fabfunda.com/product-img/women-charming-party-wear-oran-1721123762.jpeg'],
-          category: 'Clothes',
-          subcategory: 'Sarees',
-          brand: 'Fabfunda',
-          rating: 4.5,
-          reviews: 76,
-          stock: 30,
-          sold: 132,
-          inStock: true,
-          isPopular: true,
-          isTrending: false,
-          isHighQuality: false,
-          tags: ['party wear', 'saree', 'silk'],
-          colors: ['Orange'],
-        },
-        {
-          name: 'Sangria Embellished Party Wear Saree',
-          description: 'Premium embellished saree with matching blouse, perfect for weddings and parties',
-          price: 3199,
-          originalPrice: 4499,
-          discount: 29,
-          image: 'https://assets.myntassets.com/w_360,q_50,,dpr_2,fl_progressive,f_webp/assets/images/2025/MAY/19/E0UQb9jL_e8320cf45780408a8e51cfb3d73ba5e9.jpg',
-          images: ['https://assets.myntassets.com/w_360,q_50,,dpr_2,fl_progressive,f_webp/assets/images/2025/MAY/19/E0UQb9jL_e8320cf45780408a8e51cfb3d73ba5e9.jpg'],
-          category: 'Clothes',
-          subcategory: 'Sarees',
-          brand: 'Sangria',
+          name: 'Nike Air Max 2',
+          price: 9499,
+          image: 'https://via.placeholder.com/150',
+          category: 'Shoes',
           rating: 4.8,
-          reviews: 145,
-          stock: 15,
-          sold: 198,
+          reviews: 85,
+          description: 'Latest Nike Air Max collection.',
           inStock: true,
-          isPopular: true,
-          isTrending: false,
-          isHighQuality: false,
-          tags: ['party wear', 'saree', 'wedding'],
-          colors: ['Sangria'],
         },
         {
-          name: 'Chaand Party Wear Saree with Readymade Blouse',
-          description: 'Gorgeous designer saree with readymade blouse, featuring elegant patterns and premium fabric',
-          price: 2899,
-          originalPrice: 3999,
-          discount: 28,
-          image: 'https://cdn.shopaccino.com/nakhrali/products/23-89419750967879_l.jpg?v=660',
-          images: ['https://cdn.shopaccino.com/nakhrali/products/23-89419750967879_l.jpg?v=660'],
-          category: 'Clothes',
-          subcategory: 'Sarees',
-          brand: 'Nakhrali',
-          rating: 4.6,
-          reviews: 98,
-          stock: 22,
-          sold: 156,
-          inStock: true,
-          isPopular: true,
-          isTrending: false,
-          isHighQuality: false,
-          tags: ['party wear', 'saree', 'designer'],
-          colors: ['Multi'],
-        },
-        {
-          name: 'Grey Silk Party Wear Saree',
-          description: 'Elegant grey silk saree with rainbow border, perfect for evening parties and celebrations',
-          price: 2599,
-          originalPrice: 3599,
-          discount: 28,
-          image: 'https://www.latestkurtidesigns.com/wp-content/uploads/2024/04/Rainbow-Silk.jpg',
-          images: ['https://www.latestkurtidesigns.com/wp-content/uploads/2024/04/Rainbow-Silk.jpg'],
-          category: 'Clothes',
-          subcategory: 'Sarees',
-          brand: 'Latest Kurti Designs',
-          rating: 4.5,
-          reviews: 82,
-          stock: 28,
-          sold: 124,
-          inStock: true,
-          isPopular: true,
-          isTrending: false,
-          isHighQuality: false,
-          tags: ['party wear', 'saree', 'silk'],
-          colors: ['Grey'],
-        },
-        {
-          name: 'Red Georgette Sequence Work Party Wear Saree',
-          description: 'Stunning red georgette saree with beautiful sequence work, ideal for festive occasions',
-          price: 2399,
-          originalPrice: 3299,
-          discount: 27,
-          image: 'https://royalanarkali.com/wp-content/uploads/2020/11/party-wear-georgette-sequence-work-saree-for-womens-red.jpg',
-          images: ['https://royalanarkali.com/wp-content/uploads/2020/11/party-wear-georgette-sequence-work-saree-for-womens-red.jpg'],
-          category: 'Clothes',
-          subcategory: 'Sarees',
-          brand: 'Royal Anarkali',
+          name: 'Adidas Ultraboost',
+          price: 12999,
+          image: 'https://via.placeholder.com/150',
+          category: 'Shoes',
           rating: 4.7,
-          reviews: 112,
-          stock: 18,
-          sold: 167,
+          reviews: 120,
+          description: 'Comfortable running shoes.',
           inStock: true,
-          isPopular: true,
-          isTrending: false,
-          isHighQuality: false,
-          tags: ['party wear', 'saree', 'festive'],
-          colors: ['Red'],
         },
         {
-          name: 'Banarasi Soft Silk Zari Weaving Party Wear Saree',
-          description: 'Traditional Banarasi silk saree with intricate zari weaving, perfect for weddings',
-          price: 3499,
-          originalPrice: 4999,
-          discount: 30,
-          image: 'http://vootbuy.in/cdn/shop/products/free-01skf-priyanshi-kastbhanjan-fashion-unstitched-original-imagent4zy8ybfz5.webp?v=1690351020&width=1024',
-          images: ['http://vootbuy.in/cdn/shop/products/free-01skf-priyanshi-kastbhanjan-fashion-unstitched-original-imagent4zy8ybfz5.webp?v=1690351020&width=1024'],
-          category: 'Clothes',
-          subcategory: 'Sarees',
-          brand: 'Kastbhanjan Fashion',
-          rating: 4.9,
-          reviews: 156,
-          stock: 12,
-          sold: 203,
-          inStock: true,
-          isPopular: true,
-          isTrending: false,
-          isHighQuality: false,
-          tags: ['party wear', 'saree', 'banarasi', 'wedding'],
-          colors: ['Multi'],
-        },
-        
-        // 6 Designer Bangles (Trending Collection)
-        {
-          name: 'Designer Gold Plated Bangles Set',
-          description: 'Elegant designer gold plated bangles with intricate patterns. Perfect for weddings and special occasions. Set of 2 bangles with premium finish.',
-          price: 1299,
-          originalPrice: 1999,
-          discount: 35,
-          image: 'http://karatcart.com/cdn/shop/files/download_c3b926d9-13fe-4aad-903e-4b7199ee60e5.jpg?v=1753454568',
-          images: ['http://karatcart.com/cdn/shop/files/download_c3b926d9-13fe-4aad-903e-4b7199ee60e5.jpg?v=1753454568'],
-          category: 'Accessories',
-          subcategory: 'Bangles',
-          brand: 'KaratCart',
-          rating: 4.6,
-          reviews: 78,
-          stock: 35,
-          sold: 142,
-          inStock: true,
-          isPopular: false,
-          isTrending: true,
-          isHighQuality: false,
-          tags: ['bangles', 'gold plated', 'designer'],
-          colors: ['Gold'],
-        },
-        {
-          name: 'Traditional Kundan Bangles',
-          description: 'Beautiful traditional kundan work bangles with stone embellishments. Classic design for ethnic wear. Comfortable fit with adjustable size.',
-          price: 1499,
-          originalPrice: 2299,
-          discount: 35,
-          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfaDFuJpUm9VUlwXHmNb2T97Fy1ofyRMm4Zw&s',
-          images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfaDFuJpUm9VUlwXHmNb2T97Fy1ofyRMm4Zw&s'],
-          category: 'Accessories',
-          subcategory: 'Bangles',
-          brand: 'Traditional Jewels',
-          rating: 4.7,
-          reviews: 92,
-          stock: 28,
-          sold: 167,
-          inStock: true,
-          isPopular: false,
-          isTrending: true,
-          isHighQuality: false,
-          tags: ['bangles', 'kundan', 'traditional'],
-          colors: ['Gold'],
-        },
-        {
-          name: 'Antique Gold Plated Floral Openable Bangles',
-          description: 'Stunning antique gold plated bangles with floral design. Openable style for easy wearing. Perfect for traditional and contemporary outfits.',
-          price: 1399,
-          originalPrice: 2099,
-          discount: 33,
-          image: 'https://www.sanvijewels.com/cdn/shop/files/IMG_20230922_133843.jpg?v=1723881322&width=1920',
-          images: ['https://www.sanvijewels.com/cdn/shop/files/IMG_20230922_133843.jpg?v=1723881322&width=1920'],
-          category: 'Accessories',
-          subcategory: 'Bangles',
-          brand: 'Sanvi Jewels',
-          rating: 4.5,
+          name: 'Puma RS-X',
+          price: 7999,
+          image: 'https://via.placeholder.com/150',
+          category: 'Shoes',
+          rating: 4.3,
           reviews: 65,
-          stock: 32,
-          sold: 128,
+          description: 'Stylish casual shoes.',
           inStock: true,
-          isPopular: false,
-          isTrending: true,
-          isHighQuality: false,
-          tags: ['bangles', 'antique', 'floral'],
-          colors: ['Gold'],
-        },
-        {
-          name: 'Bridal Rajwadi Bangle Set with Jhumki',
-          description: 'Exquisite bridal rajwadi bangle set with matching jhumki earrings. Royal Rajasthani design with premium craftsmanship. Complete bridal jewelry set.',
-          price: 2499,
-          originalPrice: 3999,
-          discount: 38,
-          image: 'https://ishhaara.com/cdn/shop/files/ishhaara-bridal-rajwadi-bangle-set-with-jhumki-82097746725415.jpg?v=1728561944&width=1946',
-          images: ['https://ishhaara.com/cdn/shop/files/ishhaara-bridal-rajwadi-bangle-set-with-jhumki-82097746725415.jpg?v=1728561944&width=1946'],
-          category: 'Accessories',
-          subcategory: 'Bangles',
-          brand: 'Ishhaara',
-          rating: 4.9,
-          reviews: 134,
-          stock: 18,
-          sold: 189,
-          inStock: true,
-          isPopular: false,
-          isTrending: true,
-          isHighQuality: false,
-          tags: ['bangles', 'bridal', 'rajwadi'],
-          colors: ['Gold', 'Red'],
-        },
-        {
-          name: 'Gold Finish Kundan Jhoomer Bangles',
-          description: 'Luxurious gold finish kundan bangles with jhoomer design. Traditional craftsmanship with modern appeal. Perfect for weddings and festivals.',
-          price: 1799,
-          originalPrice: 2799,
-          discount: 36,
-          image: 'http://ratnauraa.com/cdn/shop/files/1_8953f526-ab7d-470c-91eb-c2fd0b26199a.png?v=1716871223',
-          images: ['http://ratnauraa.com/cdn/shop/files/1_8953f526-ab7d-470c-91eb-c2fd0b26199a.png?v=1716871223'],
-          category: 'Accessories',
-          subcategory: 'Bangles',
-          brand: 'Ratnauraa',
-          rating: 4.8,
-          reviews: 108,
-          stock: 24,
-          sold: 176,
-          inStock: true,
-          isPopular: false,
-          isTrending: true,
-          isHighQuality: false,
-          tags: ['bangles', 'kundan', 'jhoomer'],
-          colors: ['Gold'],
-        },
-        {
-          name: 'Premium Designer Bangles Collection',
-          description: 'Premium designer bangles with intricate detailing. High-quality finish with comfortable fit. Ideal for special occasions and celebrations.',
-          price: 1599,
-          originalPrice: 2499,
-          discount: 36,
-          image: 'http://nayabjewellery.com/cdn/shop/files/20_3437bd7b-bce9-40a4-bb68-cf2e3ef87891.jpg?v=1746559761',
-          images: ['http://nayabjewellery.com/cdn/shop/files/20_3437bd7b-bce9-40a4-bb68-cf2e3ef87891.jpg?v=1746559761'],
-          category: 'Accessories',
-          subcategory: 'Bangles',
-          brand: 'Nayab Jewellery',
-          rating: 4.6,
-          reviews: 87,
-          stock: 30,
-          sold: 154,
-          inStock: true,
-          isPopular: false,
-          isTrending: true,
-          isHighQuality: false,
-          tags: ['bangles', 'designer', 'premium'],
-          colors: ['Gold'],
-        },
-        
-        // 8 High Quality Beauty Products
-        {
-          name: 'Mamaearth Rice Face Wash & Moisturizer Set',
-          description: 'Complete skincare combo with Rice Face Wash and Oil-Free Face Moisturizer. Enriched with rice water for glowing, hydrated skin. Perfect for daily use.',
-          price: 599,
-          originalPrice: 899,
-          discount: 33,
-          image: 'https://assets.myntassets.com/dpr_1.5,q_30,w_400,c_limit,fl_progressive/assets/images/32642216/2025/2/14/84edd612-5f6c-48c9-b8b0-507c57c221331739505261763-Mamaearth-Set-Of-Rice-Face-Wash--Oil-Free-Face-Moisturizer-7-18.jpg',
-          images: ['https://assets.myntassets.com/dpr_1.5,q_30,w_400,c_limit,fl_progressive/assets/images/32642216/2025/2/14/84edd612-5f6c-48c9-b8b0-507c57c221331739505261763-Mamaearth-Set-Of-Rice-Face-Wash--Oil-Free-Face-Moisturizer-7-18.jpg'],
-          category: 'Beauty',
-          subcategory: 'Skincare',
-          brand: 'Mamaearth',
-          rating: 4.7,
-          reviews: 234,
-          stock: 45,
-          sold: 312,
-          inStock: true,
-          isPopular: false,
-          isTrending: false,
-          isHighQuality: true,
-          tags: ['skincare', 'face wash', 'moisturizer'],
-          colors: ['White'],
-        },
-        {
-          name: 'Mamaearth Cleanse & Glow Kit',
-          description: 'Premium cleansing and glowing kit with natural ingredients. Gentle formula for all skin types. Achieve radiant, healthy-looking skin.',
-          price: 699,
-          originalPrice: 999,
-          discount: 30,
-          image: 'https://images.mamaearth.in/catalog/product/c/o/combo2_fop_white_bg.jpg?format=auto&height=600&width=600',
-          images: ['https://images.mamaearth.in/catalog/product/c/o/combo2_fop_white_bg.jpg?format=auto&height=600&width=600'],
-          category: 'Beauty',
-          subcategory: 'Skincare',
-          brand: 'Mamaearth',
-          rating: 4.8,
-          reviews: 189,
-          stock: 38,
-          sold: 267,
-          inStock: true,
-          isPopular: false,
-          isTrending: false,
-          isHighQuality: true,
-          tags: ['skincare', 'cleansing', 'glow'],
-          colors: ['White'],
-        },
-        {
-          name: 'Mamaearth Charcoal Face Scrub',
-          description: 'Deep cleansing charcoal face scrub that removes impurities and dead skin cells. Natural exfoliation for smooth, refreshed skin.',
-          price: 349,
-          originalPrice: 499,
-          discount: 30,
-          image: 'https://images.mamaearth.in/catalog/product/c/h/charcoal_face_scrub_1.jpg?format=auto&width=400&height=400',
-          images: ['https://images.mamaearth.in/catalog/product/c/h/charcoal_face_scrub_1.jpg?format=auto&width=400&height=400'],
-          category: 'Beauty',
-          subcategory: 'Skincare',
-          brand: 'Mamaearth',
-          rating: 4.6,
-          reviews: 156,
-          stock: 52,
-          sold: 289,
-          inStock: true,
-          isPopular: false,
-          isTrending: false,
-          isHighQuality: true,
-          tags: ['skincare', 'scrub', 'charcoal'],
-          colors: ['Black'],
-        },
-        {
-          name: 'Rose Nourishing Cream',
-          description: 'Luxurious rose-infused nourishing cream for soft, supple skin. Deeply moisturizes and rejuvenates. Natural rose extracts for a healthy glow.',
-          price: 299,
-          originalPrice: 449,
-          discount: 33,
-          image: 'https://www.lindobeautycare.in/product-images/0T0A0140.JPG/369677000000072027/1100x1100',
-          images: ['https://www.lindobeautycare.in/product-images/0T0A0140.JPG/369677000000072027/1100x1100'],
-          category: 'Beauty',
-          subcategory: 'Skincare',
-          brand: 'Lindo Beauty',
-          rating: 4.5,
-          reviews: 98,
-          stock: 48,
-          sold: 178,
-          inStock: true,
-          isPopular: false,
-          isTrending: false,
-          isHighQuality: true,
-          tags: ['skincare', 'cream', 'rose'],
-          colors: ['Pink'],
-        },
-        {
-          name: 'Rose Skin Nourishing Cream',
-          description: 'Premium rose cream with skin nourishing properties. Enriched with natural rose extracts. Provides deep hydration and radiance.',
-          price: 399,
-          originalPrice: 599,
-          discount: 33,
-          image: 'https://panchvati.in/cdn/shop/files/81e9k2PEssL._SL1500.jpg?v=1741083546&width=1946',
-          images: ['https://panchvati.in/cdn/shop/files/81e9k2PEssL._SL1500.jpg?v=1741083546&width=1946'],
-          category: 'Beauty',
-          subcategory: 'Skincare',
-          brand: 'Panchvati',
-          rating: 4.7,
-          reviews: 124,
-          stock: 42,
-          sold: 198,
-          inStock: true,
-          isPopular: false,
-          isTrending: false,
-          isHighQuality: true,
-          tags: ['skincare', 'cream', 'rose'],
-          colors: ['Pink'],
-        },
-        {
-          name: 'Avon Naturals Rose Day Cream',
-          description: 'Lightweight rose day cream for daily protection and nourishment. Natural rose extracts for fresh, glowing skin. SPF protection included.',
-          price: 449,
-          originalPrice: 649,
-          discount: 31,
-          image: 'https://www.avon.co.in/cdn/shop/files/Artboard3_fe341c57-a6c9-4e5c-8b3b-f775433729b9.jpg?v=1768810963&width=1000',
-          images: ['https://www.avon.co.in/cdn/shop/files/Artboard3_fe341c57-a6c9-4e5c-8b3b-f775433729b9.jpg?v=1768810963&width=1000'],
-          category: 'Beauty',
-          subcategory: 'Skincare',
-          brand: 'Avon',
-          rating: 4.6,
-          reviews: 142,
-          stock: 36,
-          sold: 223,
-          inStock: true,
-          isPopular: false,
-          isTrending: false,
-          isHighQuality: true,
-          tags: ['skincare', 'day cream', 'rose', 'spf'],
-          colors: ['Pink'],
-        },
-        {
-          name: 'Vaseline Sun & Pollution Protection Body Lotion SPF 30',
-          description: 'Advanced body lotion with SPF 30 protection against sun and pollution. Deep moisturization with UV protection. 400ml for long-lasting use.',
-          price: 349,
-          originalPrice: 499,
-          discount: 30,
-          image: 'https://media6.ppl-media.com//tr:h-235,w-235,c-at_max,dpr-2/static/img/product/401823/vaseline-sun-pollution-protection-spf-30-body-lotion-400-ml-1-51-70-11-19-11_5_display_1729070357_c9533e73.jpg',
-          images: ['https://media6.ppl-media.com//tr:h-235,w-235,c-at_max,dpr-2/static/img/product/401823/vaseline-sun-pollution-protection-spf-30-body-lotion-400-ml-1-51-70-11-19-11_5_display_1729070357_c9533e73.jpg'],
-          category: 'Beauty',
-          subcategory: 'Body Care',
-          brand: 'Vaseline',
-          rating: 4.8,
-          reviews: 267,
-          stock: 58,
-          sold: 345,
-          inStock: true,
-          isPopular: false,
-          isTrending: false,
-          isHighQuality: true,
-          tags: ['body lotion', 'spf', 'sun protection'],
-          colors: ['White'],
-        },
-        {
-          name: 'Vaseline Intensive Care Mature Skin Rejuvenation Lotion',
-          description: 'Specially formulated for mature skin rejuvenation. Intensive care formula with deep moisturizing properties. Restores skin elasticity and smoothness.',
-          price: 399,
-          originalPrice: 599,
-          discount: 33,
-          image: 'https://static.beautytocare.com/cdn-cgi/image/f=auto/media/catalog/product/v/a/vaseline-intensive-care-mature-skin-rejuvenation-body-lotion-400ml_1.jpg',
-          images: ['https://static.beautytocare.com/cdn-cgi/image/f=auto/media/catalog/product/v/a/vaseline-intensive-care-mature-skin-rejuvenation-body-lotion-400ml_1.jpg'],
-          category: 'Beauty',
-          subcategory: 'Body Care',
-          brand: 'Vaseline',
-          rating: 4.7,
-          reviews: 198,
-          stock: 44,
-          sold: 276,
-          inStock: true,
-          isPopular: false,
-          isTrending: false,
-          isHighQuality: true,
-          tags: ['body lotion', 'mature skin', 'rejuvenation'],
-          colors: ['White'],
         },
       ]);
-      console.log('✅ Sample products initialized - 8 Sarees, 6 Bangles, 8 Beauty Products');
+      console.log('✅ Sample products initialized');
     } else {
       console.log(`📦 Found ${count} products in database`);
     }
@@ -1390,7 +941,9 @@ app.post('/api/orders', authMiddleware, async (req, res) => {
 // Get User Orders
 app.get('/api/orders', authMiddleware, async (req, res) => {
   try {
-    const orders = await Order.find({ userId: req.userId }).sort({ createdAt: -1 });
+    const orders = await Order.find({ userId: req.userId })
+      .populate('items.product')
+      .sort({ createdAt: -1 });
     res.json({ orders }); // Wrap in object for consistency
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -1400,7 +953,8 @@ app.get('/api/orders', authMiddleware, async (req, res) => {
 // Get Single Order
 app.get('/api/orders/:id', authMiddleware, async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id)
+      .populate('items.product');
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
@@ -3012,25 +2566,49 @@ app.post('/api/returns', authMiddleware, async (req, res) => {
   try {
     const { orderId, items, reason, description, images, refundMethod } = req.body;
     
-    console.log('📦 Return request received:', { orderId, itemsCount: items?.length, reason });
+    console.log('📦 Return request received:', { 
+      orderId, 
+      itemsCount: items?.length, 
+      reason,
+      userId: req.user?.userId || req.userId
+    });
     
+    // Validate required fields
     if (!orderId || !items || items.length === 0 || !reason) {
+      console.log('❌ Missing required fields');
       return res.status(400).json({ message: 'Missing required fields' });
     }
     
+    // Get userId from either req.user.userId or req.userId
+    const userId = req.user?.userId || req.userId;
+    
+    if (!userId) {
+      console.log('❌ No userId found in request');
+      return res.status(401).json({ message: 'User not authenticated' });
+    }
+    
+    console.log('🔍 Looking for order:', orderId, 'for user:', userId);
+    
     // Check if order exists and belongs to user
-    const order = await Order.findOne({ _id: orderId, userId: req.user.userId });
+    const order = await Order.findOne({ _id: orderId, userId: userId });
+    
     if (!order) {
+      console.log('❌ Order not found or does not belong to user');
       return res.status(404).json({ message: 'Order not found' });
     }
     
+    console.log('✅ Order found:', order._id, 'Status:', order.status);
+    
     // Check if order is delivered
     if (order.status !== 'Delivered') {
+      console.log('❌ Order not delivered, status:', order.status);
       return res.status(400).json({ message: 'Only delivered orders can be returned' });
     }
     
     // Generate unique return ID
     const returnId = `RET-${Date.now()}`;
+    
+    console.log('🔄 Processing items...');
     
     // Process items - ensure productId is valid ObjectId or skip it
     const processedItems = items.map((item, index) => {
@@ -3059,9 +2637,9 @@ app.post('/api/returns', authMiddleware, async (req, res) => {
       
       // Build item object - only include productId if it's valid
       const itemData = {
-        name: item.name,
-        quantity: item.quantity,
-        price: item.price,
+        name: item.name || 'Unknown Product',
+        quantity: item.quantity || 1,
+        price: item.price || 0,
         reason: item.reason || reason
       };
       
@@ -3080,11 +2658,11 @@ app.post('/api/returns', authMiddleware, async (req, res) => {
     
     console.log('💰 Refund amount:', refundAmount);
     
-    // Create return request
-    const returnRequest = new Return({
+    // Create return request object
+    const returnData = {
       returnId,
       orderId,
-      userId: req.user.userId,
+      userId: userId,
       items: processedItems,
       reason,
       description: description || '',
@@ -3099,8 +2677,12 @@ app.post('/api/returns', authMiddleware, async (req, res) => {
         scheduled: false,
         address: order.address?.address || ''
       }
-    });
+    };
     
+    console.log('💾 Saving return request...');
+    
+    // Create return request
+    const returnRequest = new Return(returnData);
     await returnRequest.save();
     
     console.log('✅ Return created:', returnId);
@@ -3110,8 +2692,13 @@ app.post('/api/returns', authMiddleware, async (req, res) => {
       return: returnRequest
     });
   } catch (error) {
-    console.error('Error creating return:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    console.error('❌ Error creating return:', error);
+    console.error('Error stack:', error.stack);
+    res.status(500).json({ 
+      message: 'Server error', 
+      error: error.message,
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
 });
 
