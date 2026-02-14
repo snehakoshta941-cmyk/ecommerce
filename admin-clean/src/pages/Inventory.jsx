@@ -112,11 +112,13 @@ const Inventory = () => {
         </div>
       </div>
 
-      <div className="card overflow-hidden">
+      {/* Inventory Table - Desktop */}
+      <div className="card overflow-hidden hidden md:block">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Image</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Product</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Category</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Price</th>
@@ -132,6 +134,16 @@ const Inventory = () => {
                 const StatusIcon = status.icon
                 return (
                   <tr key={product._id} className="border-t border-gray-100 hover:bg-gray-50">
+                    <td className="py-3 px-4">
+                      <img
+                        src={product.image || product.images?.[0] || 'https://via.placeholder.com/50'}
+                        alt={product.name}
+                        className="w-12 h-12 object-cover rounded-lg border border-gray-200"
+                        onError={(e) => {
+                          e.target.src = 'https://via.placeholder.com/50?text=No+Image'
+                        }}
+                      />
+                    </td>
                     <td className="py-3 px-4 font-medium">{product.name}</td>
                     <td className="py-3 px-4">{product.category}</td>
                     <td className="py-3 px-4">₹{product.price}</td>
@@ -162,6 +174,55 @@ const Inventory = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Inventory Cards - Mobile */}
+      <div className="block md:hidden space-y-4">
+        {filteredInventory.map((product) => {
+          const stock = product.stock || 0
+          const status = getStockStatus(stock)
+          const StatusIcon = status.icon
+          return (
+            <div key={product._id} className="card">
+              {/* Product Image and Name */}
+              <div className="flex gap-3 mb-3 pb-3 border-b border-gray-200">
+                <img
+                  src={product.image || product.images?.[0] || 'https://via.placeholder.com/80'}
+                  alt={product.name}
+                  className="w-20 h-20 object-cover rounded-lg border-2 border-gray-300"
+                  onError={(e) => {
+                    e.target.src = 'https://via.placeholder.com/80?text=No+Image'
+                  }}
+                />
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-bold text-sm text-gray-900 mb-1">{product.name}</h3>
+                  <p className="text-xs text-gray-600 mb-2">{product.category}</p>
+                  <p className="text-lg font-bold text-primary-600">₹{product.price}</p>
+                </div>
+              </div>
+
+              {/* Stock Info */}
+              <div className="mb-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs text-gray-500">Stock Level</span>
+                  <div className="flex items-center gap-2">
+                    <StatusIcon size={16} className={status.color.includes('red') ? 'text-red-600' : status.color.includes('yellow') ? 'text-yellow-600' : 'text-green-600'} />
+                    <span className={`text-xs font-semibold ${status.color}`}>
+                      {status.label}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="text-center p-3 bg-gray-50 rounded-lg">
+                  <span className={`text-2xl font-bold ${status.color}`}>
+                    {stock}
+                  </span>
+                  <span className="text-xs text-gray-600 ml-2">units</span>
+                </div>
+              </div>
+            </div>
+          )
+        })}
       </div>
     </div>
   )

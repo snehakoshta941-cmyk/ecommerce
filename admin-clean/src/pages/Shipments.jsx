@@ -327,12 +327,119 @@ const Shipments = () => {
         )}
       </div>
 
-      <div className="card overflow-hidden">
+      {/* Mobile Card View */}
+      <div className="block md:hidden space-y-4">
+        {filteredShipments.length === 0 ? (
+          <div className="card text-center py-8">
+            <Package className="mx-auto text-gray-400 mb-3" size={48} />
+            <p className="text-gray-600">No shipments found</p>
+          </div>
+        ) : (
+          filteredShipments.map((shipment) => (
+            <div key={shipment._id} className="card">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Truck size={16} className="text-blue-600" />
+                    <span className="font-semibold text-gray-900">
+                      {shipment.shipment?.trackingNumber || 'N/A'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500">Order: {shipment.trackingId || shipment._id}</p>
+                </div>
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(shipment.status)}`}>
+                  {shipment.status}
+                </span>
+              </div>
+
+              {/* Product Images */}
+              {shipment.items && shipment.items.length > 0 && (
+                <div className="mb-3">
+                  <p className="text-xs text-gray-500 mb-2">Products ({shipment.items.length})</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {shipment.items.slice(0, 3).map((item, idx) => (
+                      <div key={idx} className="relative">
+                        <img
+                          src={item.product?.image || 'https://via.placeholder.com/60'}
+                          alt={item.product?.name || 'Product'}
+                          className="w-14 h-14 object-cover rounded-lg border-2 border-gray-200"
+                          onError={(e) => {
+                            e.target.src = 'https://via.placeholder.com/60'
+                          }}
+                        />
+                        {item.quantity > 1 && (
+                          <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                            {item.quantity}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                    {shipment.items.length > 3 && (
+                      <div className="w-14 h-14 bg-gray-100 rounded-lg flex items-center justify-center text-xs font-semibold text-gray-600">
+                        +{shipment.items.length - 3}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 gap-3 mb-3 text-sm">
+                <div>
+                  <p className="text-gray-500 text-xs">Carrier</p>
+                  <p className="font-medium">{shipment.shipment?.carrier || 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-gray-500 text-xs">Date</p>
+                  <p className="font-medium">{new Date(shipment.createdAt).toLocaleDateString()}</p>
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <div className="flex items-center gap-2 text-sm">
+                  <MapPin size={14} className="text-gray-400" />
+                  <span className="text-gray-700">{shipment.shipment?.currentLocation || 'N/A'}</span>
+                </div>
+              </div>
+
+              {shipment.shipment?.estimatedDelivery && (
+                <div className="bg-blue-50 p-2 rounded-lg mb-3">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Calendar size={14} className="text-blue-600" />
+                    <span className="text-blue-700">
+                      ETA: {new Date(shipment.shipment.estimatedDelivery).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setSelectedShipment(shipment)}
+                  className="flex-1 btn-secondary text-sm py-2 flex items-center justify-center gap-2"
+                >
+                  <Eye size={16} />
+                  View Details
+                </button>
+                <button
+                  onClick={() => handleDeleteShipment(shipment._id, shipment.shipment?.trackingNumber)}
+                  className="btn-secondary bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 flex items-center justify-center"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Desktop Table View */}
+      <div className="hidden md:block card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Tracking ID</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Products</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Customer</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Carrier</th>
@@ -346,6 +453,33 @@ const Shipments = () => {
                 <tr key={shipment._id} className="border-t border-gray-100 hover:bg-gray-50">
                   <td className="py-3 px-4 font-medium">
                     {shipment.shipment?.trackingNumber || 'N/A'}
+                  </td>
+                  <td className="py-3 px-4">
+                    <div className="flex items-center gap-2">
+                      {shipment.items && shipment.items.length > 0 ? (
+                        <>
+                          {shipment.items.slice(0, 3).map((item, idx) => (
+                            <img
+                              key={idx}
+                              src={item.product?.image || 'https://via.placeholder.com/80'}
+                              alt={item.product?.name || 'Product'}
+                              className="w-10 h-10 object-cover rounded border-2 border-gray-200 shadow-sm"
+                              title={item.product?.name || 'Product'}
+                              onError={(e) => {
+                                e.target.src = 'https://via.placeholder.com/80'
+                              }}
+                            />
+                          ))}
+                          {shipment.items.length > 3 && (
+                            <div className="w-10 h-10 bg-gray-100 rounded flex items-center justify-center text-xs font-semibold text-gray-600">
+                              +{shipment.items.length - 3}
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <span className="text-gray-400 text-sm">No items</span>
+                      )}
+                    </div>
                   </td>
                   <td className="py-3 px-4">{shipment.trackingId || shipment._id}</td>
                   <td className="py-3 px-4">

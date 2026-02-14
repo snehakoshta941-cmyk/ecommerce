@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getOrders, updateOrderStatus } from '../services/api'
-import { Search, Eye, Package, Truck, CheckCircle, XCircle, Download, FileText, Clock, MapPin, Calendar, User, CreditCard, Filter } from 'lucide-react'
+import { Search, Eye, Package, Truck, CheckCircle, XCircle, Download, FileText, Clock, MapPin, Calendar, User, CreditCard, Filter, ChevronDown, ChevronUp } from 'lucide-react'
 
 const Orders = () => {
   const [orders, setOrders] = useState([])
@@ -11,6 +11,7 @@ const Orders = () => {
   const [showTimeline, setShowTimeline] = useState(false)
   const [statusFilter, setStatusFilter] = useState('All')
   const [dateFilter, setDateFilter] = useState({ from: '', to: '' })
+  const [expandedOrders, setExpandedOrders] = useState([])
 
   useEffect(() => {
     loadOrders()
@@ -312,6 +313,14 @@ const Orders = () => {
     }
   }
 
+  const toggleOrderExpand = (orderId) => {
+    setExpandedOrders(prev =>
+      prev.includes(orderId)
+        ? prev.filter(id => id !== orderId)
+        : [...prev, orderId]
+    )
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
@@ -406,8 +415,8 @@ const Orders = () => {
         </div>
       </div>
 
-      {/* Orders Table */}
-      <div className="card overflow-hidden">
+      {/* Orders Table - Desktop */}
+      <div className="card overflow-hidden hidden md:block">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50">
@@ -486,6 +495,83 @@ const Orders = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Orders Cards - Mobile */}
+      <div className="block md:hidden space-y-4">
+        {filteredOrders.map((order) => (
+          <div key={order._id} className="card">
+            {/* Card Header */}
+            <div className="flex justify-between items-start mb-3">
+              <div className="flex-1">
+                <p className="text-xs text-gray-500 mb-1">Order ID</p>
+                <p className="font-bold text-sm">{order.trackingId || order._id.slice(-8)}</p>
+              </div>
+              <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(order.status)}`}>
+                {order.status}
+              </span>
+            </div>
+
+            {/* Customer Info */}
+            <div className="mb-3 pb-3 border-b border-gray-200">
+              <div className="flex items-center gap-2 mb-2">
+                <User size={16} className="text-gray-400" />
+                <p className="font-medium text-sm">{order.user?.name || 'N/A'}</p>
+              </div>
+              <p className="text-xs text-gray-600 ml-6">{order.user?.email || 'N/A'}</p>
+            </div>
+
+            {/* Order Details Grid */}
+            <div className="grid grid-cols-2 gap-3 mb-3">
+              <div>
+                <p className="text-xs text-gray-500 mb-1">Total Amount</p>
+                <p className="font-bold text-primary-600">₹{order.total}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 mb-1">Items</p>
+                <p className="font-semibold">{order.items?.length || 0} items</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 mb-1">Payment</p>
+                <p className="text-sm font-medium">{order.paymentMethod || 'N/A'}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 mb-1">Date</p>
+                <p className="text-sm">{new Date(order.createdAt).toLocaleDateString()}</p>
+              </div>
+            </div>
+
+            {/* Tracking Info */}
+            {order.shipment?.trackingNumber && (
+              <div className="mb-3 p-2 bg-blue-50 rounded-lg">
+                <p className="text-xs text-blue-700 mb-1">Tracking Number</p>
+                <p className="font-mono text-xs font-bold text-blue-900">{order.shipment.trackingNumber}</p>
+                <p className="text-xs text-blue-600 mt-1">{order.shipment.carrier}</p>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  setSelectedOrder(order)
+                  setShowTimeline(true)
+                }}
+                className="flex-1 py-2 px-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center justify-center gap-2 text-sm font-medium"
+              >
+                <Eye size={16} />
+                View Details
+              </button>
+              <button
+                onClick={() => generateInvoice(order)}
+                className="py-2 px-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center justify-center"
+                title="Download Invoice"
+              >
+                <FileText size={16} />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Order Details & Timeline Modal */}
@@ -625,7 +711,19 @@ const Orders = () => {
                     <tbody>
                       {selectedOrder.items?.map((item, index) => (
                         <tr key={index} className="border-t border-gray-100">
-                          <td className="py-3 px-4">{item.product?.name || item.name || 'Product'}</td>
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={item.product?.image || item.product?.images?.[0] || item.image || 'https://via.placeholder.com/50'}
+                                alt={item.product?.name || item.name || 'Product'}
+                                className="w-12 h-12 object-cover rounded-lg border border-gray-200"
+                                onError={(e) => {
+                                  e.target.src = 'https://via.placeholder.com/50?text=No+Image'
+                                }}
+                              />
+                              <span className="font-medium">{item.product?.name || item.name || 'Product'}</span>
+                            </div>
+                          </td>
                           <td className="py-3 px-4 text-center">{item.quantity}</td>
                           <td className="py-3 px-4 text-right">₹{item.price}</td>
                           <td className="py-3 px-4 text-right font-semibold">₹{item.quantity * item.price}</td>

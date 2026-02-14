@@ -134,14 +134,14 @@ const Layout = ({ setIsAuthenticated }) => {
       <main className="lg:ml-72 min-h-screen">
         {/* Top Header Bar */}
         <div className="bg-white border-b-2 border-gray-100 shadow-sm sticky top-0 z-30">
-          <div className="px-4 lg:px-8 py-4 flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold gradient-text">
+          <div className="px-4 lg:px-8 py-4 flex items-center justify-between gap-4">
+            <div className="flex-1 min-w-0 ml-16 lg:ml-0">
+              <h2 className="text-xl lg:text-2xl font-bold gradient-text truncate">
                 {menuItems.find(item => item.path === location.pathname)?.label || 'Dashboard'}
               </h2>
-              <p className="text-sm text-gray-600 font-medium">Welcome back, Admin</p>
+              <p className="text-xs lg:text-sm text-gray-600 font-medium mt-1">Welcome back, Admin</p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 lg:gap-3 flex-shrink-0">
               <button className="p-2 rounded-xl hover:bg-gray-100 transition-all relative">
                 <Bell size={20} className="text-gray-600" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>

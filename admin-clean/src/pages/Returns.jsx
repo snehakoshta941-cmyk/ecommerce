@@ -211,7 +211,8 @@ const Returns = () => {
         </div>
       </div>
 
-      <div className="card overflow-hidden">
+      {/* Returns Table - Desktop */}
+      <div className="card overflow-hidden hidden md:block">
         <div className="overflow-x-auto">
           {loading ? (
             <div className="text-center py-8">
@@ -298,6 +299,94 @@ const Returns = () => {
             </table>
           )}
         </div>
+      </div>
+
+      {/* Returns Cards - Mobile */}
+      <div className="block md:hidden space-y-4">
+        {loading ? (
+          <div className="text-center py-8">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <p className="text-gray-600 mt-2">Loading returns...</p>
+          </div>
+        ) : filteredReturns.length === 0 ? (
+          <div className="text-center py-8">
+            <Package className="mx-auto text-gray-300" size={64} />
+            <p className="text-gray-600 mt-4 text-lg font-medium">No returns found</p>
+            <p className="text-gray-500 text-sm mt-1">
+              {returns.length === 0 
+                ? 'No return requests have been submitted yet' 
+                : 'Try adjusting your search query'}
+            </p>
+          </div>
+        ) : (
+          filteredReturns.map((returnItem) => (
+            <div key={returnItem._id} className="card">
+              {/* Header */}
+              <div className="flex justify-between items-start mb-3 pb-3 border-b border-gray-200">
+                <div className="flex-1">
+                  <p className="text-xs text-gray-500 mb-1">Return ID</p>
+                  <p className="font-bold text-sm">{returnItem.returnId}</p>
+                  <p className="text-xs text-gray-600 mt-1">Order: {returnItem.orderId?.trackingId || 'N/A'}</p>
+                </div>
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(returnItem.status)}`}>
+                  {returnItem.status}
+                </span>
+              </div>
+
+              {/* Customer Info */}
+              <div className="mb-3 pb-3 border-b border-gray-200">
+                <p className="text-xs text-gray-500 mb-1">Customer</p>
+                <p className="font-medium text-sm">{returnItem.userId?.name || 'Unknown'}</p>
+                <p className="text-xs text-gray-600">{returnItem.userId?.email || ''}</p>
+              </div>
+
+              {/* Details Grid */}
+              <div className="grid grid-cols-2 gap-3 mb-3">
+                <div>
+                  <p className="text-xs text-gray-500 mb-1">Items</p>
+                  <p className="font-semibold">{returnItem.items?.length || 0} items</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 mb-1">Refund Amount</p>
+                  <p className="font-bold text-primary-600">₹{(returnItem.refund?.amount || 0).toLocaleString()}</p>
+                </div>
+                <div className="col-span-2">
+                  <p className="text-xs text-gray-500 mb-1">Request Date</p>
+                  <p className="text-sm">{new Date(returnItem.createdAt).toLocaleDateString()}</p>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setSelectedReturn(returnItem)}
+                  className="flex-1 py-2 px-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center justify-center gap-2 text-sm font-medium"
+                >
+                  <Eye size={16} />
+                  View Details
+                </button>
+                {returnItem.status === 'Pending' && (
+                  <>
+                    <button
+                      onClick={() => handleApprove(returnItem)}
+                      className="py-2 px-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+                      title="Approve & Refund"
+                    >
+                      <CheckCircle size={18} />
+                    </button>
+                    <button
+                      onClick={() => handleReject(returnItem)}
+                      className="py-2 px-3 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                      title="Reject"
+                    >
+                      <XCircle size={18} />
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {/* Return Details Modal */}
