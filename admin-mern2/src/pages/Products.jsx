@@ -7,7 +7,6 @@ const Products = () => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
-  const [categoryFilter, setCategoryFilter] = useState('All')
   const [showAddModal, setShowAddModal] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
 
@@ -30,22 +29,22 @@ const Products = () => {
 
       const params = { limit: 200 }
 
-      if (categoryFilter !== 'All') {
-        params.category = categoryFilter
-      }
-
       if (searchQuery.trim()) {
         params.search = searchQuery.trim()
       }
 
       const res = await getProducts(params)
 
-      const data = res?.data
+      console.log("Raw API response:", res?.data)
 
-      let list = []
-      if (Array.isArray(data)) list = data
-      else if (Array.isArray(data?.products)) list = data.products
-      else if (Array.isArray(data?.data)) list = data.data
+      // Safe normalization
+      const raw =
+        res?.data?.products ||
+        res?.data?.data ||
+        res?.data ||
+        []
+
+      const list = Array.isArray(raw) ? raw : []
 
       const clean = list.map(p => ({
         _id: p?._id,
@@ -71,7 +70,7 @@ const Products = () => {
   // Initial load
   useEffect(() => {
     loadProducts()
-  }, [categoryFilter])
+  }, [])
 
   // Debounced search
   useEffect(() => {
@@ -103,6 +102,11 @@ const Products = () => {
         response?.data?.product ||
         response?.data?.data ||
         response?.data
+
+      if (!saved?._id) {
+        alert("Product saved but response format unexpected")
+        return loadProducts()
+      }
 
       const formatted = {
         _id: saved._id,
@@ -143,23 +147,6 @@ const Products = () => {
     }
   }
 
-  // ================= EDIT =================
-  const handleEdit = (p) => {
-    setEditingProduct(p)
-
-    setFormData({
-      name: p.name,
-      price: p.price,
-      category: p.category,
-      stock: p.stock,
-      image: p.image,
-      description: p.description,
-      isVisible: p.isVisible
-    })
-
-    setShowAddModal(true)
-  }
-
   // ================= VISIBILITY =================
   const toggleVisibility = async (id) => {
     const product = products.find(p => p._id === id)
@@ -167,7 +154,6 @@ const Products = () => {
 
     try {
       await updateProduct(id, {
-        ...product,
         isVisible: !product.isVisible
       })
 
@@ -198,7 +184,6 @@ const Products = () => {
   }
 
   // ================= UI =================
-
   if (loading) {
     return (
       <div className="flex justify-center h-96 items-center">
@@ -263,7 +248,7 @@ const Products = () => {
                       </button>
                     </td>
                     <td className="py-3 px-4 flex gap-2">
-                      <button onClick={() => handleEdit(p)}>
+                      <button onClick={() => setEditingProduct(p)}>
                         <Edit size={18}/>
                       </button>
                       <button onClick={() => handleDelete(p._id)}>
@@ -278,7 +263,6 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Modal same as yours (no change needed) */}
     </div>
   )
 }
